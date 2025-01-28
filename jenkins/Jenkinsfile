@@ -5,24 +5,31 @@ pipeline {
        }
     }
     stages {
-        stage('Build') {
+        stage('Clean Dir') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                deleteDir()  // This will clean the workspace
             }
         }
-        stage('Test') {
+        stage('Clone Git') {
             steps {
-                sh 'mvn test'
+                sh 'git clone https://github.com/sakula-1/simple-java-maven-app.git'
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
+        }
+        stage('Maven version') {
+            steps {
+                sh 'mvn --version'
+            }
+        }
+        stage('Maven test') {
+            steps {
+                dir('simple-java-maven-app') { // Correct the directory path
+                    sh 'mvn test' // Close the quote properly
                 }
             }
         }
-        stage('Deliver') {
+    stage('Maven build') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                sh 'mvn package'
             }
         }
     }
