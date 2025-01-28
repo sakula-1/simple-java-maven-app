@@ -15,10 +15,13 @@ pipeline {
             }
         }
         stage('Maven test') {
-            steps {
-                    sh 'mvn test'
-                }
+    steps {
+        dir('simple-java-maven-app') { // Adjust this path as per your project structure
+            sh 'mvn test'
         }
+    }
+}
+
         stage('Maven build') {
             steps {
                 dir('simple-java-maven-app') { // Run in the correct directory
