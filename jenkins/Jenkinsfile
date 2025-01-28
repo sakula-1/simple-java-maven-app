@@ -14,9 +14,9 @@ pipeline {
                 sh 'mvn --version'
             }
         }
-        stage('Maven test') {
+        stage('Maven Test') {
     steps {
-        dir('simple-java-maven-app') { // Adjust this path as per your project structure
+        dir('/var/lib/jenkins/workspace/my first pipeline/simple-java-maven-app') {  // Replace with the directory containing pom.xml
             sh 'mvn test'
         }
     }
