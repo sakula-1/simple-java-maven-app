@@ -16,10 +16,8 @@ pipeline {
         }
         stage('Maven test') {
             steps {
-                dir('simple-java-maven-app') { // Ensure this matches the repo folder name
                     sh 'mvn test'
                 }
-            }
         }
         stage('Maven build') {
             steps {
