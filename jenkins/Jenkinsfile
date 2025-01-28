@@ -1,18 +1,12 @@
 pipeline {
-    agent {
-       tools{
-           maven '392'
-       }
+    agent any  // Use a valid agent type
+    tools {
+        maven '392' // Ensure this Maven version is configured in Jenkins under Global Tool Configuration
     }
     stages {
         stage('Clean Dir') {
             steps {
-                deleteDir()  // This will clean the workspace
-            }
-        }
-        stage('Clone Git') {
-            steps {
-                sh 'git clone https://github.com/sakula-1/simple-java-maven-app.git'
+                deleteDir() // Clean the workspace
             }
         }
         stage('Maven version') {
@@ -22,14 +16,16 @@ pipeline {
         }
         stage('Maven test') {
             steps {
-                dir('simple-java-maven-app') { // Correct the directory path
-                    sh 'mvn test' // Close the quote properly
+                dir('simple-java-maven-app') { // Ensure this matches the repo folder name
+                    sh 'mvn test'
                 }
             }
         }
-    stage('Maven build') {
+        stage('Maven build') {
             steps {
-                sh 'mvn package'
+                dir('simple-java-maven-app') { // Run in the correct directory
+                    sh 'mvn package'
+                }
             }
         }
     }
